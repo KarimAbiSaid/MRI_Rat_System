@@ -9,8 +9,8 @@ ser = serial.Serial('COM5', 115200)
 time.sleep(1)  # Wait for the serial connection to initialize
 
 # Write initial lines to the Arduino
-ser.write(b"0\n")
-file_path = 'arduino_data_29_05_In_Vivo.csv'
+ser.write(b"0\n") #the delay in ms to the sensor
+file_path = 'arduino_data_+_date.csv' #the name of the csv file we will write to
 
 
 
