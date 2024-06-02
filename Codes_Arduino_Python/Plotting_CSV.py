@@ -41,7 +41,9 @@ def convert_to_seconds_elapsed(time_str):
 
     except ValueError:
         return None
-    
+
+
+#The below function is due to the code from the arduino jumping backwards by 1 second when the time reaches an integer multiple, e.g. 277.8. 277.94. 277.0, 278.06, etc
 def correct_time_jumps(time_series):
     corrected_time = time_series.copy()
     
@@ -82,8 +84,6 @@ for time in data['Time Elapsed']:
 data['Continuous Time Elapsed'] = continuous_time
 
 
-# Convert 'Continuous Time Elapsed' to seconds for plotting
-# data['Continuous Time Elapsed'] = data['Continuous Time Elapsed']
 
 # Convert 'Servo Position' and 'Hand Position' to numeric and drop rows with invalid values
 data['Servo Position'] = pd.to_numeric(data['Servo Position'], errors='coerce')
@@ -92,14 +92,7 @@ data['MaxAngle'] = pd.to_numeric(data['MaxAngle'], errors='coerce')
 data['Contact Value'] = pd.to_numeric(data['Contact Value'], errors='coerce')
 
 data = data.dropna(subset=['Servo Position', 'Hand Position', 'MaxAngle','Contact Value'])
-# print(data['Time Elapsed'][98420:98440])
-# print(data['Continuous Time Elapsed'][98420:98440])
 
-
-# plt.plot(data['Continuous Time Elapsed'])
-# plt.show()
-
-# '''
 # Plotting
 fig, ax = plt.subplots()
 
@@ -142,10 +135,4 @@ ax.legend(loc='upper left', bbox_to_anchor=(1, 1), ncol=1)
 plt.tight_layout()
 plt.show()
 
-# '''
-# import numpy as np
-# from scipy import signal
-# start_index = 1800
-# end_index = 2300
-# plt.stem( data['Continuous Time Elapsed'][start_index:end_index][0:250],(signal.correlate(data['Servo Position'][start_index:end_index],data['Hand Position'][start_index:end_index], 'same'))[250:500])
-# plt.show()
+
